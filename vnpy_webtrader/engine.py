@@ -63,6 +63,8 @@ class WebEngine(BaseEngine):
     def process_event(self, event: Event) -> None:
         """处理事件"""
         self.server.publish(event.type, event.data)
+        if event.type == EVENT_TRADE:
+            self.main_engine.get_engine('email').send_email(EVENT_TRADE, str(event.data))
 
     def close(self):
         """关闭"""
